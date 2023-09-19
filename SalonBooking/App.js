@@ -1,22 +1,71 @@
-import { StatusBar } from 'expo-status-bar';
-import {Text, View , Image , TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { Button, StyleSheet, View, Text, SafeAreaView, Alert, TouchableOpacity } from 'react-native';
+import LottieView from 'lottie-react-native';
 
 export default function App() {
-  return (
-    <View className = "bg-slate-500 border-2 border-red-200 flex-1 px-12 py-3 space-y-24">
-      <View className = " border-2 mt-12 flex flex-row max-w-screen-lg">
-        <TouchableOpacity>
-          <Image className = "w-12 h-20 border-2 p-5 mt-12 rounded-full hover:opacity-50" source = {require('./src/img/Logo.jpeg')} />
-        </TouchableOpacity>
-        <View>
-          <Text>dadadad</Text>
-        </View>
-      </View>
-      <View className = "font-normal border-2 border-red-200 px-5 py-4">
-        <Text className = "text-2xl italic ">Welcome to Our Salon</Text>
-      </View>
-      <StatusBar style="auto" />
-    </View>
-  );
-};
+    const animation = useRef(null);
+    const [isLoading, setIsLoading] = useState(false);
+    function toHomeScreen() {
+        setIsLoading(!isLoading);
+        console.log(isLoading);
+    }
+    useEffect(() => { }, []);
+
+    return (
+        <SafeAreaView>
+            {
+                !isLoading
+                    ?
+                    <View>
+                        <View className="flex flex-row items-baseline max-h-screen ">
+                            <LottieView
+                                autoPlay
+                                loop
+                                style={styles.centered}
+                                source={require('./assets/animations/animation_nails.json')}
+                            />
+                        </View>
+                        <View className="flex flex-row justify-center mt-2">
+                            <View className="flex flex-col justify-center mt-5 text-center items-center">
+                                <Text className="italic" style={styles.subtitle}>Tai Nails</Text>
+                                <Text style={styles.title}>Welcome to Our Salon</Text>
+                                <View>
+                                    <TouchableOpacity
+                                        className="bg-[#fa6192] text-white text-center items-center w-[100px] h-[50px] mt-5 rounded"
+                                        onPress={() => toHomeScreen()}
+                                    >
+                                        <Text className="mt-3 text-lg">Check In</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                        </View>
+                    </View>
+                    :
+                    <View className="flex flex-row justify-center mt-2">
+                        <View className="flex flex-col justify-center mt-5 text-center items-center">
+                            <Text className="text-lg" style={styles.subtitle}>Home Navigation Screen</Text>
+                        </View>
+                    </View>
+            }
+        </SafeAreaView>
+    );
+}
+
+const styles = StyleSheet.create({
+    centered: {
+        width: 500,
+        height: 500,
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    title: {
+        fontSize: 18,
+        marginVertical: 2,
+    },
+    subtitle: {
+        fontSize: 16,
+        color: "#888",
+    },
+});
