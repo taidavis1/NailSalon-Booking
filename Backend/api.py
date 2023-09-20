@@ -69,19 +69,19 @@ def booking():
         "messages": "Thank You For Your Appointment! We will be in touch soon",
     })
     
-@app.route("api/checking" , methods = ['POST'])
+@app.route("/api/checking" , methods = ['POST'])
 def checking():
     data = request.get_json()
     name = data.get('name')
     phone = data.get('phone')
-    CheckCustomer = Booking.query.filter_by(Booking.name == name and Booking.phone == phone).first()
+    CheckCustomer = Booking.query.filter_by(phone = phone).first()
     if CheckCustomer:
         return jsonify({
             'messages': 'Check in Successful'
         })
     else:
         return jsonify({
-            'error': 'Information you enter does not match'
+            'messages': 'Information you enter does not match'
         })
 
 @app.route('/api/generatehours/<days>/<date>')
