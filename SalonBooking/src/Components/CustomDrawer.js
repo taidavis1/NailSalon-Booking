@@ -17,8 +17,8 @@ const CustomerDrawer = props => {
 					<DrawerItemList {...props} />
 				</View>
 			</DrawerContentScrollView>
-			<View className = "p-5 mb-8">
-				<TouchableOpacity className = "bg-[#fa6192]" onPress={() => {}} style={{paddingVertical: 15}}>
+			<View className = "p-5 mb-8 shadow-md">
+				<TouchableOpacity className = "bg-[#fa6192] rounded-md" onPress={() => {}} style={{paddingVertical: 15}}>
 					<Text className = " text-center text-xl text-white italic tracking-wide">Log In</Text>
 				</TouchableOpacity>
 			</View>
