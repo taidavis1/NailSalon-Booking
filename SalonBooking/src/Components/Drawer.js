@@ -5,6 +5,8 @@ import CustomerDrawer from "../Components/CustomDrawer";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import {faHome, faDashboard} from '@fortawesome/free-solid-svg-icons';
 
 DrawerC = createDrawerNavigator();
 
@@ -14,21 +16,21 @@ const Drawer = () => {
             {props => <CustomerDrawer {...props} />} 
             screenOptions = {{
                 headerShown: false,
-                drawerActiveBackgroundColor: '#e67a7f',
-                drawerActiveTintColor: '#fff',
+                drawerActiveBackgroundColor: '#5ef5f7',
+                drawerActiveTintColor: 'black',
                 drawerInactiveTintColor: '#333',
             }}>
             <DrawerC.Screen name = "Home" component = {HomeScreen} 
                 options = {{
                     drawerIcon: ({color}) => (
-                        <Ionicons name="home-outline" size={23} color={color} />
+                        <FontAwesomeIcon icon={ faHome } size={20} />
                     ),
                 }}
             />
             <DrawerC.Screen name = "Admin" component = {AdminScreen} 
                 options = {{
                     drawerIcon: ({color}) => (
-                        <Ionicons name="person-outline" size={23} color={color} />
+                        <FontAwesomeIcon icon={ faDashboard } size={20} />
                     ),
                 }}
             />

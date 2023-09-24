@@ -3,8 +3,6 @@ import {StyleSheet, View, Text, TouchableOpacity, Platform, AppRegistry , Toucha
 import LottieView from 'lottie-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './src/views/HomeScreen';
-import AdminScreen from './src/views/AdminScreen';
 import Drawer from './src/Components/Drawer';
 import 'react-native-gesture-handler';
 export default function App() {
@@ -19,7 +17,7 @@ export default function App() {
         if (timerRef.current) clearTimeout(timerRef.current);
             timerRef.current = setTimeout(() => {
             setIsLoading(false);
-        },120000); // 2 minutes
+        }, 120000); // 2 minutes
     };
     useEffect(() => {
         if (animationRef.current){

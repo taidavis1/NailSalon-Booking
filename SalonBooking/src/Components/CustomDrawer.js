@@ -5,6 +5,8 @@ import AdminScreen from '../views/AdminScreen';
 import logo from '../img/Logo.png'
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faRightToBracket} from '@fortawesome/free-solid-svg-icons';
 
 const CustomerDrawer = props => {
     return(
@@ -17,9 +19,12 @@ const CustomerDrawer = props => {
 					<DrawerItemList {...props} />
 				</View>
 			</DrawerContentScrollView>
-			<View className = "p-5 mb-8 shadow-md">
-				<TouchableOpacity className = "bg-[#fa6192] rounded-md" onPress={() => {}} style={{paddingVertical: 15}}>
-					<Text className = " text-center text-xl text-white italic tracking-wide">Log In</Text>
+			<View className = "shadow-md p-6">
+				<TouchableOpacity className = "bg-[#5ef5f7] rounded-md flex flex-row justify-center text-center items-center gap-2"
+					onPress={() => {}}
+					style={{paddingVertical: 15}}
+				>
+					<FontAwesomeIcon icon={ faRightToBracket } size={20} />
 				</TouchableOpacity>
 			</View>
         </SafeAreaProvider>

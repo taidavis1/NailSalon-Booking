@@ -1,22 +1,22 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert  , ImageBackground , TouchableWithoutFeedback , Keyboard} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, ImageBackground, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import Background from "../img/Background.png";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-function DismissKeyboard(){
-    Keyboard.dismiss();
-}
+import Background from "../img/bg-1.jpg";
 
 export default function HomeScreen({ navigation }) {
+    
     const [name, onChangeName] = React.useState('');
     const [email, onChangeEmail] = React.useState('');
     const [phoneNumber, onChangeNumber] = React.useState('');
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, phone: phoneNumber })
+        body: JSON.stringify({ email: email, name: name, phone: phoneNumber })
     };
+
+    function DismissKeyboard(){
+        Keyboard.dismiss();
+    }
   
     async function SubmitForm (){
         console.log(name);
@@ -35,6 +35,7 @@ export default function HomeScreen({ navigation }) {
             console.error(error);
         }
     }
+
     return (
         <View>
             <ImageBackground className = "w-full h-full" source={Background}>
@@ -45,7 +46,7 @@ export default function HomeScreen({ navigation }) {
                             <TextInput
                                 className="
                                     border-b-2 border-b-black text-lg
-                                    focus:ring-blue-500 focus:border-blue-500 block py-4 px-2 w-[250px]
+                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[250px]
                                 "
                                 onChangeText={onChangeName}
                                 placeholder="Your name"
@@ -53,7 +54,7 @@ export default function HomeScreen({ navigation }) {
                             <TextInput
                                 className="
                                     border-b-2 border-b-black text-lg
-                                    focus:ring-blue-500 focus:border-blue-500 block py-4 px-2 w-[250px]
+                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[250px]
                                 "
                                 placeholder="Your email"
                                 onChangeText={onChangeEmail}
@@ -62,13 +63,13 @@ export default function HomeScreen({ navigation }) {
                                 keyboardType='numeric'
                                 className="
                                     border-b-2 border-b-black text-lg
-                                    focus:ring-blue-500 focus:border-blue-500 block py-4 px-2 w-[250px]
+                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[250px]
                                 "
                                 placeholder="Your phone number"
                                 onChangeText={onChangeNumber}
                             />
                             <TouchableOpacity
-                                className="border-2 border-[#fa6192] items-center capitalize text-white text-center px-5 py-3 rounded"
+                                className="border-2 border-[#5ef5f7] bg-[#5ef5f7] items-center capitalize text-white text-center px-5 py-3 rounded"
                                 title="Go to Details"
                                 // onPress={() => navigation.navigate('Admin')}
                                 onPress={() => SubmitForm()}
