@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faRightToBracket} from '@fortawesome/free-solid-svg-icons';
 
-const CustomerDrawer = props => {
+const CustomerDrawer = ({ isLoading, setIsLoading, ...props }) => {
     return(
 		<SafeAreaProvider>
 			<DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: '#0000'}}>
@@ -20,8 +20,7 @@ const CustomerDrawer = props => {
 				</View>
 			</DrawerContentScrollView>
 			<View className = "shadow-md p-6">
-				<TouchableOpacity className = "bg-[#5ef5f7] rounded-md flex flex-row justify-center text-center items-center gap-2"
-					onPress={() => {}}
+				<TouchableOpacity onPress={() => setIsLoading(false)} className = "bg-[#5ef5f7] rounded-md flex flex-row justify-center text-center items-center gap-2"
 					style={{paddingVertical: 15}}
 				>
 					<FontAwesomeIcon icon={ faRightToBracket } size={20} />

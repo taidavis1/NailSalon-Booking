@@ -19,20 +19,23 @@ export default function HomeScreen({ navigation }) {
     }
   
     async function SubmitForm (){
-        console.log(name);
-        console.log(phoneNumber);
-        try {
-            await fetch(
-                'http://127.0.0.1:5000/api/checking', requestOptions)
-                .then(response => {
-                    response.json()
-                        .then(data => {
-                            Alert.alert(data.messages);
-                        });
-                })
+        if (name == '' && phoneNumber == ''){
+            Alert.alert("Please Enter Your Information !")
         }
-        catch (error) {
-            console.error(error);
+        else{
+            try {
+                await fetch(
+                    'http://127.0.0.1:5000/api/checking', requestOptions)
+                    .then(response => {
+                        response.json()
+                            .then(data => {
+                                Alert.alert(data.messages);
+                            });
+                    })
+            }
+            catch (error) {
+                console.error(error);
+            }
         }
     }
 
@@ -40,21 +43,20 @@ export default function HomeScreen({ navigation }) {
         <View>
             <ImageBackground className = "w-full h-full" source={Background}>
                 <TouchableWithoutFeedback onPress={ () => { DismissKeyboard() } }>
-                    <View className="flex-1 justify-center items-center">
-                        <View className="flex py-6 shadow-md bg-white/90 w-1/3 flex-col justify-center items-center space-y-8">
-                            
+                    <View className="flex-1 mt-32 justify-center items-center">
+                        <View className="flex py-6 shadow-md bg-white/90 w-1/2 flex-col justify-center items-center space-y-8">
                             <TextInput
                                 className="
                                     border-b-2 border-b-black text-lg
-                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[250px]
+                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[500px]
                                 "
                                 onChangeText={onChangeName}
-                                placeholder="Your name"
+                                placeholder="Your name (require)"
                             />
                             <TextInput
                                 className="
                                     border-b-2 border-b-black text-lg
-                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[250px]
+                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[500px]
                                 "
                                 placeholder="Your email"
                                 onChangeText={onChangeEmail}
@@ -63,13 +65,13 @@ export default function HomeScreen({ navigation }) {
                                 keyboardType='numeric'
                                 className="
                                     border-b-2 border-b-black text-lg
-                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[250px]
+                                    focus:ring-[#5ef5f7] focus:border-[#5ef5f7] block py-4 px-2 w-[500px]
                                 "
-                                placeholder="Your phone number"
+                                placeholder="Your phone number (require)"
                                 onChangeText={onChangeNumber}
                             />
                             <TouchableOpacity
-                                className="border-2 border-[#5ef5f7] bg-[#5ef5f7] items-center capitalize text-white text-center px-5 py-3 rounded"
+                                className="border-2 border-[#5ef5f7] bg-[#5ef5f7] items-center capitalize text-white text-center px-12 py-3 rounded"
                                 title="Go to Details"
                                 // onPress={() => navigation.navigate('Admin')}
                                 onPress={() => SubmitForm()}

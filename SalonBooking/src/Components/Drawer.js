@@ -10,10 +10,10 @@ import {faHome, faDashboard} from '@fortawesome/free-solid-svg-icons';
 
 DrawerC = createDrawerNavigator();
 
-const Drawer = () => {
+const Drawer = ({isLoading, setIsLoading}) => {
     return (
         <DrawerC.Navigator drawerContent = 
-            {props => <CustomerDrawer {...props} />} 
+            {props => <CustomerDrawer isLoading={isLoading} setIsLoading={setIsLoading} {...props} />}
             screenOptions = {{
                 headerShown: false,
                 drawerActiveBackgroundColor: '#5ef5f7',
@@ -24,13 +24,6 @@ const Drawer = () => {
                 options = {{
                     drawerIcon: ({color}) => (
                         <FontAwesomeIcon icon={ faHome } size={20} />
-                    ),
-                }}
-            />
-            <DrawerC.Screen name = "Admin" component = {AdminScreen} 
-                options = {{
-                    drawerIcon: ({color}) => (
-                        <FontAwesomeIcon icon={ faDashboard } size={20} />
                     ),
                 }}
             />

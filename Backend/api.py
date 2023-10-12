@@ -4,6 +4,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
 from flask_cors import CORS
+from flask_login import LoginManager , login_required , login_user
 
 app = Flask(__name__)
 CORS(app)
@@ -81,7 +82,7 @@ def checking():
         })
     else:
         return jsonify({
-            'messages': 'Information you enter does not match'
+            'messages': 'Information Does Not Match Our Records'
         })
 
 @app.route('/api/generatehours/<days>/<date>')

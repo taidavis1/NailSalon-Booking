@@ -4,6 +4,7 @@ import LottieView from 'lottie-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Drawer from './src/Components/Drawer';
+import { useFonts, JosefinSans_500Medium } from '@expo-google-fonts/';
 import 'react-native-gesture-handler';
 export default function App() {
     const animationRef = useRef(null);
@@ -17,7 +18,7 @@ export default function App() {
         if (timerRef.current) clearTimeout(timerRef.current);
             timerRef.current = setTimeout(() => {
             setIsLoading(false);
-        }, 120000); // 2 minutes
+        }, 5000); // 2 minutes
     };
     useEffect(() => {
         if (animationRef.current){
@@ -35,7 +36,7 @@ export default function App() {
                     !isLoading
                     ?
                     <>
-                        <View className = "bg-slate-300 flex-1">
+                        <View className = "bg-orange-200 flex-1">
                             <View className="flex flex-row items-baseline max-h-screen">
                                 <LottieView 
                                     ref={(animation) => {
@@ -47,16 +48,16 @@ export default function App() {
                                     source={require('./assets/animations/animation_nails.json')}
                                 />
                             </View>
-                            <View className="flex flex-row justify-center mt-2">
-                                <View className="flex flex-col justify-center mt-5 text-center items-center">
-                                    <Text className="italic text-3xl" style={styles.subtitle}>Tai Nails</Text>
-                                    <Text className = "text-2xl ml-4" style={styles.title}>Welcome to Our Salon</Text>
+                            <View className="flex flex-row justify-center mt-12">
+                                <View className="flex flex-col justify-center space-y-5 text-center items-center">
+                                    <Text className="italic text-gray-500 font-semibold text-5xl " style={styles.subtitle}>Tanya Nails</Text>
+                                    <Text className = "text-4xl text-blue-400 font-bold ml-4 italic" style={styles.title}>Welcome to Our Salon</Text>
                                     <View>
                                         <TouchableOpacity
-                                            className="bg-[#fa6192] items-center capitalize text-white text-center px-5 py-3 mt-5 rounded"
+                                            className="bg-[#fa6192] items-center capitalize text-white text-center px-12 py-3 rounded"
                                             onPress={() => toHomeScreen()}
                                         >
-                                            <Text className="text-xl">Check In</Text>
+                                            <Text className="text-2xl text-white">Check In</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -64,7 +65,7 @@ export default function App() {
                         </View>
                     </>
                     :
-                    <Drawer/>
+                    <Drawer isLoading={isLoading} setIsLoading={setIsLoading} />
                 }
             </TouchableWithoutFeedback>
         </NavigationContainer>
@@ -81,8 +82,5 @@ const styles = StyleSheet.create({
     },
     title: {
         marginVertical: 2,
-    },
-    subtitle: {
-        color: "#888",
     },
 });
