@@ -9,7 +9,7 @@ from flask_login import LoginManager , login_required , login_user
 app = Flask(__name__)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://taikhanh1:123giadinh@74.208.246.165:3306/admin_snail" 
+app.config['SQLALCHEMY_DATABASE_URI'] = "databse" 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.urandom(100)
 
