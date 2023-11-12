@@ -4,7 +4,6 @@ import LottieView from 'lottie-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Drawer from './src/Components/Drawer';
-import { useFonts, JosefinSans_500Medium } from '@expo-google-fonts/';
 import 'react-native-gesture-handler';
 export default function App() {
     const animationRef = useRef(null);
