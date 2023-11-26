@@ -9,13 +9,27 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from "react-native";
+import { useFonts } from "expo-font";
+import {Roboto_700Bold_Italic , Roboto_300Light_Italic} from "@expo-google-fonts/roboto";
+import {Tangerine_400Regular , Tangerine_700Bold} from "@expo-google-fonts/tangerine";
 import Background1 from "../img/bg-1.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import io from "socket.io-client"
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomeScreen({ navigation }) {
     const [phoneArray, setPhoneArray] = React.useState([]);
     const [phone, setPhone] = React.useState("");
+
+    const socket = io.connect("http://24.199.101.67:8080");
+
+    const [fontsLoaded] = useFonts({
+        Roboto_700Bold_Italic,
+        Tangerine_400Regular,
+        Tangerine_700Bold,
+        Roboto_300Light_Italic
+    });
+
 
     function DismissKeyboard() {
         Keyboard.dismiss();
@@ -33,34 +47,33 @@ export default function HomeScreen({ navigation }) {
         });
     }
 
+    const handleChecking = (resp) => {
+        alert(resp);
+        setPhone("");
+        setPhoneArray([]);
+    }
+
     async function sendCheckIn() {
-        console.log("submit");
         if (!phone) {
             Alert.alert("Please Enter Full Your Information !");
             return false;
         }
+        else if (phone.length != 10){
+            Alert.alert("Phone Number not in correct format");
+            return false
+        }
         try {
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ phone: phone })
-            };
-            await fetch("http://127.0.0.1:8080/api/checking", requestOptions).then(
-                (response) => {
-                    response.json().then((data) => {
-                        Alert.alert(data.messages);
-                    });
-                }
-            );
+
+            socket.emit('check_in', {phone: phone});
+            socket.on('check_data_app' , handleChecking);
+
         } catch (error) {
             console.error(error);
         }
     }
 
     React.useEffect(() => {
-        console.log(phoneArray);
         setPhone(phoneArray.join(""));
-        console.log(phone);
     }, [phoneArray]);
 
     return (
@@ -72,55 +85,55 @@ export default function HomeScreen({ navigation }) {
                     }}
                 >
                     <View className="flex-1 justify-center items-center">
-                        <View className="flex py-4 shadow-md bg-white/90 w-1/2 flex-col justify-center items-center space-y-8 rounded-lg">
+                        <View className="flex py-4 shadow-md backdrop-blur-lg bg-white/60 w-3/4 flex-col justify-center items-center space-y-6 rounded-lg">
                             {phone
                                 ?
                                 <View className="flex flex-row gap-2 justify-center items-center">
                                     <TextInput
-                                        className="text-lg mb-3"
-                                        keyboardType="text"
+                                        className="text-2xl mb-3"
+                                        keyboardType="default"
                                         placeholder={phone}
                                         value={phone}
                                     />
                                     <TouchableOpacity onPress={() => deleteNumber()}>
-                                        <FontAwesomeIcon icon={faDeleteLeft} size={30}></FontAwesomeIcon>
+                                        <FontAwesomeIcon icon={faDeleteLeft} size={40}></FontAwesomeIcon>
                                     </TouchableOpacity>
                                 </View>
                                 :
-                                <Text>Fill your number to check in</Text>
+                                <Text style = {{fontFamily: "Roboto_300Light_Italic"}} className = "text-2xl">Fill your number to check in</Text>
                             }
-                            <View className="flex flex-row gap-6">
+                            <View className="flex flex-row gap-5">
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 py-4 px-2 w-[100px] h-[100px] rounded-full
                                     "
                                     onPress={() => handlePhoneNumber(1)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>1</Text>
+                                        <Text className = "text-2xl">1</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                     "
                                     onPress={() => handlePhoneNumber(2)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>2</Text>
+                                        <Text className = "text-2xl">2</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                 "
                                     onPress={() => handlePhoneNumber(3)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>3</Text>
+                                        <Text className = "text-2xl">3</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
@@ -128,34 +141,34 @@ export default function HomeScreen({ navigation }) {
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                 "
                                     onPress={() => handlePhoneNumber(4)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>4</Text>
+                                        <Text className = "text-2xl">4</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                 "
                                     onPress={() => handlePhoneNumber(5)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>5</Text>
+                                        <Text className = "text-2xl">5</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                 "
                                     onPress={() => handlePhoneNumber(6)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>6</Text>
+                                        <Text className = "text-2xl">6</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
@@ -163,34 +176,34 @@ export default function HomeScreen({ navigation }) {
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                 "
                                     onPress={() => handlePhoneNumber(7)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>7</Text>
+                                        <Text className = "text-2xl">7</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                 "
                                     onPress={() => handlePhoneNumber(8)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>8</Text>
+                                        <Text className = "text-2xl">8</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                 "
                                     onPress={() => handlePhoneNumber(9)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>9</Text>
+                                        <Text className = "text-2xl">9</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
@@ -198,21 +211,21 @@ export default function HomeScreen({ navigation }) {
                                 <TouchableOpacity
                                     className="
                                     flex flex-row justify-center text-center 
-                                    border-2 border-black text-lg py-4 px-2 w-[100px] h-[100px] rounded-full
+                                    border-2 border-sky-400 text-xl py-4 px-2 w-[100px] h-[100px] rounded-full
                                 "
                                     onPress={() => handlePhoneNumber(0)}
                                 >
                                     <View className="flex flex-col justify-center text-center">
-                                        <Text>0</Text>
+                                        <Text className = "text-2xl">0</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
                             <TouchableOpacity
-                                className="border-2 border-cyan-300 bg-cyan-300 items-center capitalize text-white text-center px-12 py-3 rounded"
+                                className="border-2 border-[#9eccfa] bg-[#9eccfa] items-center capitalize text-white text-center w-[250px] py-3 rounded"
                                 // onPress={() => navigation.navigate('Admin')}
                                 onPress={() => sendCheckIn()}
                             >
-                                <Text className="text-xl">Submit</Text>
+                                <Text style= {{fontFamily: 'Tangerine_400Regular'}} className="text-4xl text-white">Submit</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

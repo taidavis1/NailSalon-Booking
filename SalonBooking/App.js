@@ -1,62 +1,47 @@
 import React, { useRef, useEffect, useState } from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Platform, AppRegistry , TouchableWithoutFeedback} from 'react-native';
-import LottieView from 'lottie-react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image , Platform, AppRegistry , TouchableWithoutFeedback} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { useFonts } from "expo-font";
+import {Roboto_700Bold_Italic , Roboto_300Light_Italic} from "@expo-google-fonts/roboto";
+import {Tangerine_400Regular , Tangerine_700Bold} from "@expo-google-fonts/tangerine";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Drawer from './src/Components/Drawer';
 import 'react-native-gesture-handler';
 export default function App() {
-    const animationRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
-    const timerRef = useRef();
     function toHomeScreen() {
         setIsLoading(!isLoading);
         console.log(isLoading);
     }
-    const resetTimer = () => {
-        if (timerRef.current) clearTimeout(timerRef.current);
-            timerRef.current = setTimeout(() => {
-            setIsLoading(false);
-        }, 5000); // 2 minutes
-    };
-    useEffect(() => {
-        if (animationRef.current){
-            animationRef.current.play();
-        }
-        resetTimer();
-        return () => {
-            if (timerRef.current) clearTimeout(timerRef.current);
-        };
-    }, []);
+    const [fontsLoaded] = useFonts({
+        Roboto_700Bold_Italic,
+        Tangerine_400Regular,
+        Tangerine_700Bold,
+        Roboto_300Light_Italic
+    });
+
+    if (!fontsLoaded) {
+        return null;
+    }
+
     return (
         <NavigationContainer>
-            <TouchableWithoutFeedback onPress={resetTimer}>
+            {/* <TouchableWithoutFeedback onPress={resetTimer}> */}
                 {
                     !isLoading
                     ?
                     <>
-                        <View className = "bg-orange-200 flex-1">
-                            <View className="flex flex-row items-baseline max-h-screen">
-                                <LottieView 
-                                    ref={(animation) => {
-                                        animationRef.current = animation;
-                                    }}
-                                    loop
-                                    autoPlay
-                                    style={styles.centered}
-                                    source={require('./assets/animations/animation_nails.json')}
-                                />
-                            </View>
-                            <View className="flex flex-row justify-center mt-12">
-                                <View className="flex flex-col justify-center space-y-5 text-center items-center">
-                                    <Text className="italic text-gray-500 font-semibold text-5xl " style={styles.subtitle}>Tanya Nails</Text>
-                                    <Text className = "text-4xl text-blue-400 font-bold ml-4 italic" style={styles.title}>Welcome to Our Salon</Text>
+                        <View className = " bg-[#9eccfa] flex-1 justify-center items-center">
+                            <Image className = "h-[350px]" source={require('./src/img/logo1.png')} />
+                            <View className="flex flex-row justify-center">
+                                <View className="flex flex-col justify-center space-y-6 text-center items-center">
+                                    <Text className = "text-6xl text-white ml-4" style={styles.title}>Welcome to Our Salon</Text>
                                     <View>
                                         <TouchableOpacity
-                                            className="bg-[#fa6192] items-center capitalize text-white text-center px-12 py-3 rounded"
+                                            className=" bg-white items-center capitalize text-center w-[250px] py-3 rounded"
                                             onPress={() => toHomeScreen()}
                                         >
-                                            <Text className="text-2xl text-white">Check In</Text>
+                                            <Text style = {{fontFamily: "Roboto_300Light_Italic"}} className="text-2xl text-sky-500">Check In</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -66,7 +51,7 @@ export default function App() {
                     :
                     <Drawer isLoading={isLoading} setIsLoading={setIsLoading} />
                 }
-            </TouchableWithoutFeedback>
+            {/* </TouchableWithoutFeedback> */}
         </NavigationContainer>
     );
 }
@@ -81,5 +66,6 @@ const styles = StyleSheet.create({
     },
     title: {
         marginVertical: 2,
+        fontFamily: "Tangerine_700Bold",
     },
 });
